@@ -14,54 +14,58 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Component //Toda classe que queremos que o Spring vai gerenciar, precisa do Component (classe mais genérica de gerenciamento do Spring)
-public class FilterTaskAuth extends OncePerRequestFilter{
+@Component // Toda classe que queremos que o Spring vai gerenciar, precisa do Component (classe mais genérica de gerenciamento do Spring)
+public class FilterTaskAuth extends OncePerRequestFilter {
 
     @Autowired
     private IUserRepository userRepository;
 
-    @Override //Toda requisição, antes de passar pela Controller, passa pelo Filter
+    @Override // Toda requisição, antes de passar pela Controller, passa pelo Filter
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
-        //Pegar a autenticação (usuário e senha)
-        var authorization = request.getHeader("Authorization"); //result: "Basic YnJhZ2FicmllbDoxMjM0NQ==" -> base64
 
-        //removendo a palavra "Basic" + removendo espaços em branco
-        var authEncoded = authorization.substring("Basic".length()).trim(); //result: "YnJhZ2FicmllbDoxMjM0NQ=="
+        // Verificando se é a rota de Tasks
+        var servletPath = request.getServletPath();
 
-        //convertendo para array de bytes
-        byte[] authDecoded = Base64.getDecoder().decode(authEncoded); //result: "[B@3136de1"
+        if (servletPath.startsWith("/tasks/")) {
 
-        var authString = new String(authDecoded); //result: "bragabriel:12345"
+            // Pegar a autenticação (usuário e senha)
+            var authorization = request.getHeader("Authorization"); // result: "Basic YnJhZ2FicmllbDoxMjM0NQ==" -> base64 
+            
+            // removendo a palavra "Basic" + removendo espaços em branco
+            var authEncoded = authorization.substring("Basic".length()).trim(); // result: "YnJhZ2FicmllbDoxMjM0NQ=="
 
-        String[] credentials = authString.split(":"); //result: ["bragabriel", "12345"]
-        String username = credentials[0];
-        String password = credentials[1];
+            // convertendo para array de bytes
+            byte[] authDecoded = Base64.getDecoder().decode(authEncoded); // result: "[B@3136de1"
 
-        
-        //Validar Usuário
-        var user = this.userRepository.findByUsername(username);
-        if(user == null){
-            response.sendError(401);
-        }else{
-            //Validar senha
-            var passwordVerify = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+            var authString = new String(authDecoded); // result: "bragabriel:12345"
 
-            //retorna true se a senha estiver correta
-            if(passwordVerify.verified){
-                filterChain.doFilter(request, response); //se chegou até aqui, queremos que 'siga viagem'
-            }else{
+            String[] credentials = authString.split(":"); // result: ["bragabriel", "12345"]
+            String username = credentials[0];
+            String password = credentials[1];
+
+            // Validar Usuário
+            var user = this.userRepository.findByUsername(username);
+            if (user == null) {
                 response.sendError(401);
+            } else {
+                // Validar senha
+                var passwordVerify = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+
+                // retorna true se a senha estiver correta
+                if (passwordVerify.verified) {
+                    //Segue viagem
+
+                    //Passando na request para o controller o idUser
+                    request.setAttribute("idUser", user.getId());
+
+                    filterChain.doFilter(request, response); // se chegou até aqui, queremos que 'siga viagem'
+                } else {
+                    response.sendError(401);
+                }
             }
+        }else{
+            filterChain.doFilter(request, response); // se chegou até aqui, queremos que 'siga viagem'
         }
-
-        //Continue
-        
-       
     }
-
-
-
-    
 }
