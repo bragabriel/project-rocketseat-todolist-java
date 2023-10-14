@@ -1,6 +1,6 @@
 # project-rocketseat-todolist-java
 
-<img src="" width="400px">
+<img src="https://github.com/bragabriel/project-rocketseat-todolist-java/blob/main/imgs/wpp.png" width="400px">
 
 Curso de **Java** e **Spring**. Disponível pela [Rocketseat](https://app.rocketseat.com.br/me/gabriel-braga-da-silva-06711)
 
