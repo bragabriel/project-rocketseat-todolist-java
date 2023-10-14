@@ -8,7 +8,14 @@
 </div>
 
 ## Sobre o curso:
-Com o tema __TO-DO List__, o curso passou pela criação de uma __Rest API__ com __ORM__ (integração com banco de dados), criação de camadas (__controllers__ e __repositories__), __validação de rotas__, utilização de __Filtros__ para a __autenticação__ e __validação de usuário__, e até mesmo a criação de um __Utils__ para o _'update'_ dinâmico de Tarefas. </br>
+Com o tema __TO-DO List__, a aplicação backend contém:
+* __Rest API__ com __ORM__ (integração com banco de dados);
+* Separação por camadas (__controllers__ e __repositories__);
+* __Validação de rotas__;
+* Utilização de __Filtros__ para a __autenticação__ e __validação de usuário__;
+* Criação de um __Utils__ para o _'update'_ dinâmico de Tarefas;
+* Tratamentos de erros e exceções, e a criação de um __Error Handler__ para o mapeamento e tratamento dos mesmos;
+* __Deploy__ da aplicação. </br>
 
 ## Tópicos abordados:
 O curso abordou os seguintes tópicos:
