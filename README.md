@@ -1,7 +1,7 @@
 # project-rocketseat-todolist-java
 
 <div align="center">
-<img src="https://github.com/bragabriel/project-rocketseat-todolist-java/blob/main/imgs/wpp.png" width="800px">
+<img src="https://github.com/bragabriel/project-rocketseat-todolist-java/blob/main/imgs/wpp.png" width="700px">
 </br>
 
 ### Curso de **Java** e **Spring**. Disponível pela [Rocketseat](https://app.rocketseat.com.br/me/gabriel-braga-da-silva-06711)
@@ -31,3 +31,11 @@ O curso abordou os seguintes tópicos:
 * Lombok;
 * H2 Database;
 * Bcrypt.
+
+</br>
+
+<div align="center">
+  
+  # Certificado de Conclusão do Curso:
+<img src="https://github.com/bragabriel/project-rocketseat-todolist-java/blob/main/imgs/CertificadoConclusaoCurso.png" width="800px">
+</div>
